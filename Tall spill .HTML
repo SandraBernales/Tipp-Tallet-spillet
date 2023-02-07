@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipp-tallet-spillet</title>
+    
+</head>
+<body>
+    
+    <div id="app"></div>
+
+    <script>
+        //model
+        let gussNumber;
+        let secretNumber;
+        
+
+        //view
+        function updateView(){
+            const gussText = gussNumber == null ? '' : `Du tippet ${gussNumber}.<br/>`;
+
+            let isCorrectOrNotText;
+            if(gussNumber==null){
+                isCorrectOrNotText = 'Skriv inn tallet du vil tippe i feltet under og trykk på knappen "Tipp"<br/>';
+            }else if(gussNumber==secretNumber) {
+                isCorrectOrNotText = '<b>Du har tippet riktig!</b>';
+            }else if (gussNumber < secretNumber){
+                    isCorrectOrNotText = 'Du har tippet for lavt.';
+                } else {
+                    isCorrectOrNotText = 'Du har tippet for høyt.';
+                }
+            
+
+            document.getElementById('app').innerHTML = `
+            <h2>Tipp-tallet-spillet</h2>
+
+            ${gussText}
+            ${isCorrectOrNotText}
+              
+            <input type="text" oninput="gussNumber = parseInt(this.value)" />
+            <button onclick="guss()">Tipp</button>
+
+            <button onclick="startGame()">Start på nytt</button>
+
+            `;
+        }
+        //controller
+        startGame();
+        function startGame() {
+            gussNumber = null;
+            secretNumber =Math.ceil(Math.random() * 100);
+            updateView();
+        }
+
+        function guss(){
+            updateView();
+        }
+
+    </script>
+
+
+</body>
+</html>
